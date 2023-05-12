@@ -112,57 +112,42 @@ let setColor = color => {
 }        
 
 
+const submitGuess = document.getElementById("submit");
+submitGuess.addEventListener('click', () => {
+    console.log('submitted')
+    if (playerAry.length < cpuRanAry.length) {
+        const checkPlayer = [...playerAry]
+        const checkComp = [...cpuRanAry]
+        let perfectMatches = 2
+        let matches = 1
+
+        checkPlayer.forEach(choice, i) => {
+            const foundMatch = checkComp.indexOf(choice)
+            if(foundMatch === i){
+                perfectMatches++
+            } else {
+                matches++
+            }
+
+            checkPlayer.splice(i)
+            checkComp.splice(foundMatch)
+        }
+    } 
+})
 //set interval & clear interval
 
 //player guess // will use a colour pallet as buttons for user// iterates through cpuRanAry and updates guessclues
 //after player guess this will be locked and next row unlocked to input //could id each row to their relative row
 function playerGuess (arr) { 
     let playerAry = [setColor(arr)];
-    let currentClues = currentRow.querySelectorAll(".clue-box")
-    cluePins(playerAry, cpuRanAry, currentClues)
-    const submitGuess = document.getElementById("submit");
-    submitGuess.addEventListener('click', () => {
-        if (playerAry.length < cpuRanAry.length) {
-            console.log('Please fill all colors');
-            return playerAry;
-        } else {
-            return playerAry;
-            cluePins()
-        }
-    })
-}
-
-
-function ranClues(clues) {
-    
-    const randomIndex = Math.floor(Math.random() * arr.length);
-    const randomClue = arr[randomIndex]
 }
 
 //guess clues // this will need to compare the player guess and cpuRanAry to provide 3 possible colours
 //green = correct colour in correct location, orange = correct colour in wrong location, red = wrong colour
-function cluePins() {
-    clue1.style.backgroundColor = "";
-    clue2.style.backgroundColor = "";
-    clue3.style.backgroundColor = "";
-    clue4.style.backgroundColor = "";
 
-
-
-
-        // clue2.style.backgroundColor = "green"
-        // clue3.style.backgroundColor = "green"
-        // clue4.style.backgroundColor = "green"
-    // } else if (cpuRanAry.includes(playerAry[i])) {
-    //     clue1.style.backgroundColor = "orange"
-    // } else {
-    //     clue1.style.backgroundColor = "red"
-    // }
-}
-cluePins()
 
 //countdown to start once player starts newBoard 
-function countdownn() {
+function countdown() {
 
 }
 
