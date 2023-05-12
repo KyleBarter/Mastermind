@@ -7,8 +7,149 @@
     <title>Mastermind</title>
     <script defer src="js/script.js"></script>
     <link rel="stylesheet" href="style/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
 </head>
 <body>
-    
+    <h1 id="new-game">DEFUSE THE BOMB</h1>
+    <div class="board">
+        <div class="rows-container"> 
+            <!-- this is where the user guesses go -->
+            <div id="row1" class="rows">
+                <div class="guess" id="guess1"></div>
+                <div class="guess" id="guess2"></div>
+                <div class="guess" id="guess3"></div>
+                <div class="guess" id="guess4"></div>
+            </div>
+            <div id="row2" class="rows">
+                <div class="guess" id="guess1"></div>
+                <div class="guess" id="guess2"></div>
+                <div class="guess" id="guess3"></div>
+                <div class="guess" id="guess4"></div>
+            </div>
+            <div id="row3" class="rows">
+                <div class="guess" id="guess1"></div>
+                <div class="guess" id="guess2"></div>
+                <div class="guess" id="guess3"></div>
+                <div class="guess" id="guess4"></div>
+            </div>
+            <div id="row4" class="rows">
+                <div class="guess" id="guess1"></div>
+                <div class="guess" id="guess2"></div>
+                <div class="guess" id="guess3"></div>
+                <div class="guess" id="guess4"></div>
+            </div>
+            <div id="row5" class="rows">
+                <div class="guess" id="guess1"></div>
+                <div class="guess" id="guess2"></div>
+                <div class="guess" id="guess3"></div>
+                <div class="guess" id="guess4"></div>
+            </div>
+            <div id="row6" class="rows">
+                <div class="guess" id="guess1"></div>
+                <div class="guess" id="guess2"></div>
+                <div class="guess" id="guess3"></div>
+                <div class="guess" id="guess4"></div>
+            </div>
+            <div id="row7" class="rows">
+                <div class="guess" id="guess1"></div>
+                <div class="guess" id="guess2"></div>
+                <div class="guess" id="guess3"></div>
+                <div class="guess" id="guess4"></div>
+            </div>
+            <div id="row8" class="rows">
+                <div class="guess" id="guess1"></div>
+                <div class="guess" id="guess2"></div>
+                <div class="guess" id="guess3"></div>
+                <div class="guess" id="guess4"></div>
+            </div>
+            <div id="row9" class="rows">
+                <div class="guess" id="guess1"></div>
+                <div class="guess" id="guess2"></div>
+                <div class="guess" id="guess3"></div>
+                <div class="guess" id="guess4"></div>
+            </div>
+            <div id="row10" class="rows">
+                <div class="guess" id="guess1"></div>
+                <div class="guess" id="guess2"></div>
+                <div class="guess" id="guess3"></div>
+                <div class="guess" id="guess4"></div>
+            </div>
+        </div>
+        <div class="clue-box-container">
+            <!-- this is where the clues are gicen to the user -->
+            <div class="clue-box"id="clue-box1">
+                <div id="clue1" class="clue"></div>
+                <div id="clue2" class="clue"></div>
+                <div id="clue3" class="clue"></div>
+                <div id="clue4" class="clue"></div>
+            </div>
+            <div class="clue-box"id="clue-box2">
+                <div id="clue1" class="clue"></div>
+                <div id="clue2" class="clue"></div>
+                <div id="clue3" class="clue"></div>
+                <div id="clue4" class="clue"></div>
+            </div>
+            <div class="clue-box"id="clue-box3">
+                <div id="clue1" class="clue"></div>
+                <div id="clue2" class="clue"></div>
+                <div id="clue3" class="clue"></div>
+                <div id="clue4" class="clue"></div>
+            </div>
+            <div class="clue-box"id="clue-box4">
+                <div id="clue1" class="clue"></div>
+                <div id="clue2" class="clue"></div>
+                <div id="clue3" class="clue"></div>
+                <div id="clue4" class="clue"></div>
+            </div>
+            <div class="clue-box"id="clue-box5">
+                <div id="clue1" class="clue"></div>
+                <div id="clue2" class="clue"></div>
+                <div id="clue3" class="clue"></div>
+                <div id="clue4" class="clue"></div>
+            </div>
+            <div class="clue-box"id="clue-box6">
+                <div id="clue1" class="clue"></div>
+                <div id="clue2" class="clue"></div>
+                <div id="clue3" class="clue"></div>
+                <div id="clue4" class="clue"></div>
+            </div>
+            <div class="clue-box"id="clue-box7">
+                <div id="clue1" class="clue"></div>
+                <div id="clue2" class="clue"></div>
+                <div id="clue3" class="clue"></div>
+                <div id="clue4" class="clue"></div>
+            </div>
+            <div class="clue-box"id="clue-box8">
+                <div id="clue1" class="clue"></div>
+                <div id="clue2" class="clue"></div>
+                <div id="clue3" class="clue"></div>
+                <div id="clue4" class="clue"></div>
+            </div>
+            <div class="clue-box"id="clue-box9">
+                <div id="clue1" class="clue"></div>
+                <div id="clue2" class="clue"></div>
+                <div id="clue3" class="clue"></div>
+                <div id="clue4" class="clue"></div>
+            </div>
+            <div class="clue-box"id="clue-box10">
+                <div id="clue1" class="clue"></div>
+                <div id="clue2" class="clue"></div>
+                <div id="clue3" class="clue"></div>
+                <div id="clue4" class="clue"></div>
+            </div>
+        </div>
+        <div class="color-choices">
+            <!-- this is the input for the user to select their colour -->
+            <div id="purple"></div>
+            <div id="yellow"></div>
+            <div id="blue"></div>
+            <div id="pink"></div>
+            <div id="white"></div>
+            <div id="black"></div>
+        </div>
+        <div id="submit">submit</div>
+    </div>
 </body>
 </html>

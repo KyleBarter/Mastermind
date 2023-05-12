@@ -1,0 +1,146 @@
+* {
+    background-color: white;
+}
+body {
+    font-family: helvetica;
+}
+
+h1 {
+    display: flex;
+    justify-content: center;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 60px;
+}
+
+h1:hover {
+    font-size: 62px;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.board {
+    height: 800px;
+    width: 500px;
+    border: solid black;
+    background-color: lightgray;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 300px 80px 120px;
+    grid-template-rows: auto;
+    grid-template-areas: 
+    "main . clue"
+    "main . clue"
+    "main . clue"
+    "main . clue"
+    "main . clue"
+    "main . clue"
+    "main . clue"
+    "main . clue"
+    "main . clue"
+    "main . clue"
+}
+
+.rows-container {
+    grid-area: main;
+    background-color: lightgray;
+}
+
+.clue-box-container {
+    grid-area: clue;
+    background-color: lightgray;
+}
+
+.rows {
+    height: 55px;
+    width: 300px;
+    background-color: lightslategray;
+    box-sizing: border-box;
+    border: solid black;
+    margin: 10px 120px 20px 10px;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+    box-sizing: border-box;
+}
+
+.clue-box {
+    height: 55px;
+    width: 100px;
+    background-color: aliceblue;
+    box-sizing: border-box;
+    border: solid black;
+    margin: 10px 120px 20px -10px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.clue {
+    border-radius: 50%;
+    background-color: gray;
+    height: 15px;
+    width: 15px;
+}
+
+.color-choices {
+    border: solid black;
+    height: 50px;
+    width: 500px;
+    display: flex;
+    margin: 750px 200px 0px -303px;
+}
+
+.guess {
+    border-radius: 50%;
+    height: 35px;
+    width: 35px;
+    margin: 7px 0px 5px 10px;
+    background-color: gray;
+}
+
+.guess:hover {
+    border: solid 2px black;
+}
+
+#purple {
+    width: 16.66%;
+    background-color: purple;
+}
+
+#yellow {
+    width: 16.66%;
+    background-color: yellow;
+}
+
+#blue {
+    width: 16.66%;
+    background-color: blue;
+}
+
+#pink {
+    width: 16.66%;
+    background-color: pink;
+}
+
+#white {
+    width: 16.66%;
+    background-color: white;
+}
+
+#black {
+    width: 16.66%;
+    background-color: black;
+}
+
+#submit {
+    width: 500px;
+    height: 50px;
+    border: solid black;
+    margin: -10px 200px 0px -303px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 40px;
+}
+
