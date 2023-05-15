@@ -54,7 +54,6 @@ let currentGuess = 0
 // const clue3 = document.getElementById("clue3")
 // const clue4 = document.getElementById("clue4")
 // const clues = [clue1, clue2, clue3, clue4]
-
 const clues = document.querySelectorAll('.clue-box')
 console.log(clues[currentRow])
 let cluePins = []
@@ -101,7 +100,6 @@ function newBoard () {
 let setColor = color => {
     if (currentGuess <= 3) {
         const guessEl = rows[currentRow].querySelectorAll('.guess')[currentGuess]
-        console.log(color)
         guessEl.style.backgroundColor = color
         currentGuess++
         playerAry.push(color)
@@ -118,6 +116,7 @@ function submitClick() {
         cluePin()
         getNextRow()
         setColor()
+        currentGuess = 0
         } else {
         console.log('You need more input')
         }
@@ -127,16 +126,14 @@ submitClick()
 
 
 function cluePin() {
-    if (playerAry.length !== cpuRanAry.length) {
+
         //comparison logic
         const checkPlayer = [...playerAry]
         const checkComp = [...cpuRanAry]
         let perfectMatches = 2
         let matches = 1
-        perfectMatches = document.querySelector("#clue");
-        // perfectMatches.style.backgroundColor = "green";
-        matches = document.querySelector("#clue");
-        // matches.style.backgroundColor = "orange";
+        perfectMatches = document.querySelectorAll("#clue");
+        matches = document.querySelectorAll("#clue");
         // check for match
         checkPlayer.forEach((choice, i) => {
             // choice = 'red'
@@ -170,101 +167,15 @@ function cluePin() {
             cluePins.push(1)
         }
         })
-    } 
 }
+
 
 function getNextRow() {
         currentRow++
         playerAry = []
         setColor()
     }
-    
-    // for (let i = 0; currentRow > 9; currentRow++){
-    //     if (currentRow === rows[9] && cluePins !== 8){
-    //         return('You lose')
-    //     } else  if (cluePins === 8){
-    //         console.log('You win') 
-    //     } else {
-    //         currentRow++
-    //          playerAry = []
-    //     }
-    // }
-}
 
-// !    const submitGuess = document.getElementById("submit");
-//     submitGuess.addEventListener('click', () => {
-//     console.log('submitted')
-//     if (playerAry.length === cpuRanAry.length) {
-//         //?comparison logic
-//         const checkPlayer = [...playerAry]
-//         const checkComp = [...cpuRanAry]
-//         let perfectMatches = 2
-//         let matches = 1
-//         perfectMatches = document.querySelector("#clue");
-//         //? perfectMatches.style.backgroundColor = "green";
-//         matches = document.querySelector("#clue");
-//         //? matches.style.backgroundColor = "orange";
-//         //? check for match
-//         checkPlayer.forEach((choice, i) => {
-//             //? choice = 'red'
-//             //? checkComp = ['red', 'yellow']
-//             const foundMatch = checkComp.indexOf(choice)
-//             if (foundMatch !== -1) {
-//                 //?check if foundMatch matches i - if so, perfect match
-//                 if(foundMatch === i) {
-//                     perfectMatches++
-//                 } else {
-//                     matches++
-//                 }
-//                 checkPlayer.splice(i, 1)
-//                 checkComp.splice(foundMatch, 1)
-//             }
-//         })
-//         //? create clue pins
-//         const cluePins = []
-//         cluePins.length = 0;
-//         for(let i = 0; perfectMatches >= 0 && i <= perfectMatches; i++){
-//             cluePins.push(2)
-//         }
-//         for(let i = 0; matches >= 0 && i <= matches; matches++){
-//             cluePins.push(1)
-//         }
-//     } else {
-//         const currentClues = currentRow.querySelectorAll(".clue")
-//         cluePins.forEach((pin, i) => {
-//             if (cluePins === perfectMatches) {
-//                 perfectMatches.style.backgroundColor = "green"
-//             }
-//             else if (cluePins === matches) {
-//                 matches.style.backgroundColor = "orange"
-//             }
-//         })
-//     }
-//     while (currentRow < rows.length) {
-//         if (cluePins === 8) {
-//             console.log('You win')
-//             break;
-//         }
-
-//         currentRow++
-//         playerAry = []
-
-//         if (currentRow === rows.length && cluePins !== 8) {
-//             console.log('You lose');
-//             break;
-//         }
-//     }
-    
-//     for (let i = 0; currentRow > 9; currentRow++){
-//         if (currentRow === rows[9] && cluePins !== 8){
-//             return('You lose')
-//         } else  if (cluePins === 8){
-//             console.log('You win') 
-//         } else {
-//             currentRow++
-//         }
-//     }
-// ! })
 
 //set interval & clear interval
 
