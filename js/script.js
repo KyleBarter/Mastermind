@@ -36,23 +36,30 @@ const row8 = document.getElementById("row8")
 const row9 = document.getElementById("row9")
 const row10 = document.getElementById("row10")
 const rows = [row1, row2, row3, row4, row5, row6, row7, row8, row9, row10]
-let currentRow = rows[0]
+let currentRow = 0
+console.log(rows[currentRow])
 
 //guess elements
-let guess1 = document.getElementById("guess1")
-let guess2 = document.getElementById("guess2")
-let guess3 = document.getElementById("guess3")
-let guess4 = document.getElementById("guess4")
-const guesses = [guess1, guess2, guess3, guess4]
+// let guess1 = document.getElementById("guess1")
+// let guess2 = document.getElementById("guess2")
+// let guess3 = document.getElementById("guess3")
+// let guess4 = document.getElementById("guess4")
+// const guesses = [guess1, guess2, guess3, guess4]
+let currentGuess = 0
 
 
 //clue elements
-const clue1 = document.getElementById("clue1")
-const clue2 = document.getElementById("clue2")
-const clue3 = document.getElementById("clue3")
-const clue4 = document.getElementById("clue4")
-const clues = [clue1, clue2, clue3, clue4]
+// const clue1 = document.getElementById("clue1")
+// const clue2 = document.getElementById("clue2")
+// const clue3 = document.getElementById("clue3")
+// const clue4 = document.getElementById("clue4")
+// const clues = [clue1, clue2, clue3, clue4]
 
+const clues = document.querySelectorAll('.clue-box')
+console.log(clues[currentRow])
+let cluePins = []
+
+//loss image bomb
 const lossImg = document.createElement('img');
 Image.src = 'https://imgur.com/a/Qrkoc3U';
 
@@ -82,51 +89,53 @@ function newBoard () {
     cpuRanAry = []
     cpuRanAry = cpuCode(colors);
     playerAry = [];
-    guesses.forEach(guess => guess.style.backgroundColor = "");
+    document.querySelectorAll('.guess').forEach(guess => guess.style.backgroundColor = "");
     clues.forEach(clue => clue.style.backgroundColor = "");
-    currentGuess = guesses[0]
-    currentRow = rows[0]
+    currentGuess = 0
+    currentRow = 0
     console.log(cpuRanAry)
     cpuCode(colors)
 }
 
 //set background color of the guess pin
 let setColor = color => {
-    currentGuess = guesses[0];
-    if (guess1.style.backgroundColor === "") {
-        guess1.style.backgroundColor = color;
-        guess1.backgroundColor = color;
-    } else if (guess2.style.backgroundColor === "") {
-        guess2.style.backgroundColor = color;
-        guess2.backgroundColor = color;
-        currentGuess = guesses[1];
-    } else if (guess3.style.backgroundColor === "") {
-        guess3.style.backgroundColor = color;
-        guess3.backgroundColor = color;
-        currentGuess = guesses[2];
-    } else if (guess4.style.backgroundColor === "") {
-        guess4.style.backgroundColor = color;
-        guess4.backgroundColor = color;
-        currentGuess = guesses[3];
+    if (currentGuess <= 3) {
+        const guessEl = rows[currentRow].querySelectorAll('.guess')[currentGuess]
+        console.log(color)
+        guessEl.style.backgroundColor = color
+        currentGuess++
+        playerAry.push(color)
+        console.log(playerAry)
     }
-    playerAry.push(color)
-    return currentGuess
-}        
+}    
+setColor()    
+
+function submitClick() {
+    const submitGuess = document.getElementById("submit");
+    submitGuess.addEventListener('click', () => {
+        if (currentGuess > 3) {
+        console.log('submitted')
+        cluePin()
+        getNextRow()
+        setColor()
+        } else {
+        console.log('You need more input')
+        }
+    })
+}
+submitClick()
 
 
-const submitGuess = document.getElementById("submit");
-const cluePins = []
-submitGuess.addEventListener('click', () => {
-    console.log('submitted')
-    if (playerAry.length < cpuRanAry.length) {
+function cluePin() {
+    if (playerAry.length !== cpuRanAry.length) {
         //comparison logic
         const checkPlayer = [...playerAry]
         const checkComp = [...cpuRanAry]
-        let perfectMatches = 0
-        let matches = 0
-        // perfectMatches = document.querySelector("#clue");
+        let perfectMatches = 2
+        let matches = 1
+        perfectMatches = document.querySelector("#clue");
         // perfectMatches.style.backgroundColor = "green";
-        // matches = document.querySelector("#clue");
+        matches = document.querySelector("#clue");
         // matches.style.backgroundColor = "orange";
         // check for match
         checkPlayer.forEach((choice, i) => {
@@ -144,7 +153,15 @@ submitGuess.addEventListener('click', () => {
                 checkComp.splice(foundMatch, 1)
             }
         })
-        //create clue pins
+        const currentClues = rows[currentRow].querySelectorAll(".clue")
+        cluePins.forEach((pin, i) => {
+            if (cluePins === perfectMatches) {
+                perfectMatches.style.backgroundColor = "green"
+            }
+            else if (cluePins === matches) {
+                matches.style.backgroundColor = "orange"
+            }
+        // create clue pins
         cluePins.length = 0;
         for(let i = 0; perfectMatches >= 0 && i <= perfectMatches; i++){
             cluePins.push(2)
@@ -152,25 +169,14 @@ submitGuess.addEventListener('click', () => {
         for(let i = 0; matches >= 0 && i <= matches; matches++){
             cluePins.push(1)
         }
-    } else {
-        const currentClues = currentRow.querySelectorAll(".clue")
-        cluePins.forEach((pin, i) => {
-            currentClues[i].style.backgroundColor = pin === 2 ? "green" : "orange"
-            console.log(currentClues)
         })
-    }
-    while (currentRow < rows.length) {
-        if (cluePins === 8) {
-            console.log('You win')
-            break;
-        }
+    } 
+}
 
+function getNextRow() {
         currentRow++
-
-        if (currentRow === rows.length && cluePins !== 8) {
-            console.log('You lose');
-            break;
-        }
+        playerAry = []
+        setColor()
     }
     
     // for (let i = 0; currentRow > 9; currentRow++){
@@ -180,9 +186,86 @@ submitGuess.addEventListener('click', () => {
     //         console.log('You win') 
     //     } else {
     //         currentRow++
+    //          playerAry = []
     //     }
     // }
-})
+}
+
+// !    const submitGuess = document.getElementById("submit");
+//     submitGuess.addEventListener('click', () => {
+//     console.log('submitted')
+//     if (playerAry.length === cpuRanAry.length) {
+//         //?comparison logic
+//         const checkPlayer = [...playerAry]
+//         const checkComp = [...cpuRanAry]
+//         let perfectMatches = 2
+//         let matches = 1
+//         perfectMatches = document.querySelector("#clue");
+//         //? perfectMatches.style.backgroundColor = "green";
+//         matches = document.querySelector("#clue");
+//         //? matches.style.backgroundColor = "orange";
+//         //? check for match
+//         checkPlayer.forEach((choice, i) => {
+//             //? choice = 'red'
+//             //? checkComp = ['red', 'yellow']
+//             const foundMatch = checkComp.indexOf(choice)
+//             if (foundMatch !== -1) {
+//                 //?check if foundMatch matches i - if so, perfect match
+//                 if(foundMatch === i) {
+//                     perfectMatches++
+//                 } else {
+//                     matches++
+//                 }
+//                 checkPlayer.splice(i, 1)
+//                 checkComp.splice(foundMatch, 1)
+//             }
+//         })
+//         //? create clue pins
+//         const cluePins = []
+//         cluePins.length = 0;
+//         for(let i = 0; perfectMatches >= 0 && i <= perfectMatches; i++){
+//             cluePins.push(2)
+//         }
+//         for(let i = 0; matches >= 0 && i <= matches; matches++){
+//             cluePins.push(1)
+//         }
+//     } else {
+//         const currentClues = currentRow.querySelectorAll(".clue")
+//         cluePins.forEach((pin, i) => {
+//             if (cluePins === perfectMatches) {
+//                 perfectMatches.style.backgroundColor = "green"
+//             }
+//             else if (cluePins === matches) {
+//                 matches.style.backgroundColor = "orange"
+//             }
+//         })
+//     }
+//     while (currentRow < rows.length) {
+//         if (cluePins === 8) {
+//             console.log('You win')
+//             break;
+//         }
+
+//         currentRow++
+//         playerAry = []
+
+//         if (currentRow === rows.length && cluePins !== 8) {
+//             console.log('You lose');
+//             break;
+//         }
+//     }
+    
+//     for (let i = 0; currentRow > 9; currentRow++){
+//         if (currentRow === rows[9] && cluePins !== 8){
+//             return('You lose')
+//         } else  if (cluePins === 8){
+//             console.log('You win') 
+//         } else {
+//             currentRow++
+//         }
+//     }
+// ! })
+
 //set interval & clear interval
 
 //?player guess // will use a colour pallet as buttons for user// iterates through cpuRanAry and updates guessclues
@@ -212,14 +295,17 @@ function renderCountdown(cb) {
   }
 //render function to make the game work
 function render(){
-    
-    if (currentRow > 9 && cluePins !== 8)
-    return lossImg
+    renderBoard()
+    renderMessage()
 }
 
 //message for winner / loser outcome
 function renderMessage() {
-    
+    if (cluePins === 8) {
+        console.log('You win')
+    } else if (cluePins !== 8 && currentRow > 9 || countdownEl === 0) {
+        console.log('You lose!') //this will need to be ammended to the lossImg variable
+    }
 }
 
 function renderBoard() {
