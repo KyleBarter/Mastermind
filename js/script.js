@@ -53,6 +53,8 @@ const clue3 = document.getElementById("clue3")
 const clue4 = document.getElementById("clue4")
 const clues = [clue1, clue2, clue3, clue4]
 
+const lossImg = document.createElement('img');
+Image.src = 'https://imgur.com/a/Qrkoc3U';
 
 // ! EVENTS
 //generate new code / play again button
@@ -113,47 +115,106 @@ let setColor = color => {
 
 
 const submitGuess = document.getElementById("submit");
+const cluePins = []
 submitGuess.addEventListener('click', () => {
     console.log('submitted')
     if (playerAry.length < cpuRanAry.length) {
+        //comparison logic
         const checkPlayer = [...playerAry]
         const checkComp = [...cpuRanAry]
-        let perfectMatches = 2
-        let matches = 1
-
-        checkPlayer.forEach(choice, i) => {
+        let perfectMatches = 0
+        let matches = 0
+        // perfectMatches = document.querySelector("#clue");
+        // perfectMatches.style.backgroundColor = "green";
+        // matches = document.querySelector("#clue");
+        // matches.style.backgroundColor = "orange";
+        // check for match
+        checkPlayer.forEach((choice, i) => {
+            // choice = 'red'
+            // checkComp = ['red', 'yellow']
             const foundMatch = checkComp.indexOf(choice)
-            if(foundMatch === i){
-                perfectMatches++
-            } else {
-                matches++
+            if (foundMatch !== -1) {
+                //check if foundMatch matches i - if so, perfect match
+                if(foundMatch === i) {
+                    perfectMatches++
+                } else {
+                    matches++
+                }
+                checkPlayer.splice(i, 1)
+                checkComp.splice(foundMatch, 1)
             }
-
-            checkPlayer.splice(i)
-            checkComp.splice(foundMatch)
+        })
+        //create clue pins
+        cluePins.length = 0;
+        for(let i = 0; perfectMatches >= 0 && i <= perfectMatches; i++){
+            cluePins.push(2)
         }
-    } 
+        for(let i = 0; matches >= 0 && i <= matches; matches++){
+            cluePins.push(1)
+        }
+    } else {
+        const currentClues = currentRow.querySelectorAll(".clue")
+        cluePins.forEach((pin, i) => {
+            currentClues[i].style.backgroundColor = pin === 2 ? "green" : "orange"
+            console.log(currentClues)
+        })
+    }
+    while (currentRow < rows.length) {
+        if (cluePins === 8) {
+            console.log('You win')
+            break;
+        }
+
+        currentRow++
+
+        if (currentRow === rows.length && cluePins !== 8) {
+            console.log('You lose');
+            break;
+        }
+    }
+    
+    // for (let i = 0; currentRow > 9; currentRow++){
+    //     if (currentRow === rows[9] && cluePins !== 8){
+    //         return('You lose')
+    //     } else  if (cluePins === 8){
+    //         console.log('You win') 
+    //     } else {
+    //         currentRow++
+    //     }
+    // }
 })
 //set interval & clear interval
 
-//player guess // will use a colour pallet as buttons for user// iterates through cpuRanAry and updates guessclues
-//after player guess this will be locked and next row unlocked to input //could id each row to their relative row
-function playerGuess (arr) { 
-    let playerAry = [setColor(arr)];
-}
+//?player guess // will use a colour pallet as buttons for user// iterates through cpuRanAry and updates guessclues
+//?after player guess this will be locked and next row unlocked to input //could id each row to their relative row
 
-//guess clues // this will need to compare the player guess and cpuRanAry to provide 3 possible colours
-//green = correct colour in correct location, orange = correct colour in wrong location, red = wrong colour
-
+//?guess clues // this will need to compare the player guess and cpuRanAry to provide 3 possible colours
+//?green = correct colour in correct location, orange = correct colour in wrong location, red = wrong colour
 
 //countdown to start once player starts newBoard 
-function countdown() {
 
-}
-
+function renderCountdown(cb) {
+    let count = 3;
+    // AUDIO.currentTime = 0;
+    // AUDIO.play();
+    countdownEl.style.visibility = 'visible';
+    countdownEl.innerText = count;
+    const timerId = setInterval(function() {
+      count--;
+      if (count) {
+        countdownEl.innerText = count;
+      } else {
+        clearInterval(timerId);
+        countdownEl.style.visibility = 'hidden';
+        cb();
+      }
+    }, 1000);
+  }
 //render function to make the game work
 function render(){
     
+    if (currentRow > 9 && cluePins !== 8)
+    return lossImg
 }
 
 //message for winner / loser outcome
