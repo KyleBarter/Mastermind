@@ -151,6 +151,7 @@ function cluePin(playerAry, cpuRanAry) {
     pinColor(perfectMatches, matches) 
 }
 
+
 function pinColor(perfectMatches, matches) {
     let cluePins = [...rows[currentRow].querySelectorAll(".clue")]
     cluePins.forEach((pin, i) => {
@@ -164,15 +165,16 @@ function pinColor(perfectMatches, matches) {
             pin.style.backgroundColor = "red"
             console.log('red')
         }
-        // ?cluePins.length = 0;
-        // for(let i = 0; perfectMatches >= 0 && i <= perfectMatches; i++){
-            //     cluePins.push(2)
-            // }
-            // for(let i = 0; matches >= 0 && i <= matches; matches++){
-                //     cluePins.push(1)
-                // ?}
     })
+                        // ?cluePins.length = 0;
+                        // for(let i = 0; perfectMatches >= 0 && i <= perfectMatches; i++){
+                            //     cluePins.push(2)
+                            // }
+                            // for(let i = 0; matches >= 0 && i <= matches; matches++){
+                                //     cluePins.push(1)
+                                // ?}
 }
+
 
 function getNextRow() {
         currentRow++
@@ -214,17 +216,17 @@ function formatTime(time) {
 function render(){
     renderBoard()
     renderCountdown()
-    renderMessage()
+    // renderMessage()
 }
 
 //message for winner / loser outcome
-function renderMessage() {
-    if (cluePins === 8) {
-        console.log('You win')
-    } else if (cluePins !== 8 && currentRow > 9 || countdownEl === 0) {
-        console.log('You lose!') //this will need to be ammended to the lossImg variable
-    }
-}
+// function renderMessage() {
+//     if (cluePins === 8) {
+//         console.log('You win')
+//     } else if (cluePins !== 8 && currentRow > 9 || countdownEl === 0) {
+//         console.log('You lose!') //this will need to be ammended to the lossImg variable
+//     }
+// }
 
 function renderBoard() {
     const board = document.querySelectorAll('board')
