@@ -144,7 +144,16 @@ h1:hover {
     font-size: 40px;
 }
 
-.countdown {
+#countdown {
     font-family: 'Orbitron', sans-serif;
     border: solid black;
+    height: 100px;
+    width: 100px;
+    display: flex;
+    margin: -300px 100px 400px 530px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: red;
+    background-color: lightgray;
 }

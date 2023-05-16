@@ -56,11 +56,13 @@ let currentGuess = 0
 // const clues = [clue1, clue2, clue3, clue4]
 const clues = document.querySelectorAll('.clue-box')
 console.log(clues[currentRow])
-let cluePins = []
+
 
 //loss image bomb
 const lossImg = document.createElement('img');
 Image.src = 'https://imgur.com/a/Qrkoc3U';
+
+const countdownEl = document.querySelectorAll('#countdown')
 
 // ! EVENTS
 //generate new code / play again button
@@ -94,6 +96,7 @@ function newBoard () {
     currentRow = 0
     console.log(cpuRanAry)
     cpuCode(colors)
+    render()
 }
 
 //set background color of the guess pin
@@ -113,7 +116,7 @@ function submitClick() {
     submitGuess.addEventListener('click', () => {
         if (currentGuess > 3) {
         console.log('submitted')
-        cluePin()
+        cluePin(playerAry, cpuRanAry)
         getNextRow()
         setColor()
         currentGuess = 0
@@ -125,50 +128,51 @@ function submitClick() {
 submitClick()
 
 
-function cluePin() {
-
-        //comparison logic
-        const checkPlayer = [...playerAry]
-        const checkComp = [...cpuRanAry]
-        let perfectMatches = 2
-        let matches = 1
-        perfectMatches = document.querySelectorAll("#clue");
-        matches = document.querySelectorAll("#clue");
-        // check for match
-        checkPlayer.forEach((choice, i) => {
-            // choice = 'red'
-            // checkComp = ['red', 'yellow']
-            const foundMatch = checkComp.indexOf(choice)
-            if (foundMatch !== -1) {
-                //check if foundMatch matches i - if so, perfect match
-                if(foundMatch === i) {
-                    perfectMatches++
-                } else {
-                    matches++
-                }
-                checkPlayer.splice(i, 1)
-                checkComp.splice(foundMatch, 1)
-            }
-        })
-        const currentClues = rows[currentRow].querySelectorAll(".clue")
-        cluePins.forEach((pin, i) => {
-            if (cluePins === perfectMatches) {
-                perfectMatches.style.backgroundColor = "green"
-            }
-            else if (cluePins === matches) {
-                matches.style.backgroundColor = "orange"
-            }
-        // create clue pins
-        cluePins.length = 0;
-        for(let i = 0; perfectMatches >= 0 && i <= perfectMatches; i++){
-            cluePins.push(2)
+function cluePin(playerAry, cpuRanAry) {
+    //comparison logic
+    const checkComp = [...cpuRanAry]
+    const checkPlayer = [...playerAry]
+    let perfectMatches = 0; 
+    let matches = 0;
+    // check for perfect match
+    checkPlayer.forEach((choice, i) => {
+        const foundMatch = checkComp.indexOf(choice)
+        if (choice === checkComp[i]) {
+            perfectMatches++
+            checkPlayer.splice(i, 1)
+            checkComp.splice(i, 1)
+            console.log('perfect match')
+        } else if (foundMatch !== -1) { // check for match
+            matches++
+            checkComp.splice(foundMatch, 1)
+            console.log('match')
         }
-        for(let i = 0; matches >= 0 && i <= matches; matches++){
-            cluePins.push(1)
-        }
-        })
+    })
+    pinColor(perfectMatches, matches) 
 }
 
+function pinColor(perfectMatches, matches) {
+    let cluePins = [...rows[currentRow].querySelectorAll(".clue")]
+    cluePins.forEach((pin, i) => {
+        if (i < perfectMatches) {
+            pin.style.backgroundColor = "green"
+            console.log('green')
+        } else if (i < matches + perfectMatches) {
+            pin.style.backgroundColor = "orange"
+            console.log('orange')
+        } else {
+            pin.style.backgroundColor = "red"
+            console.log('red')
+        }
+        // ?cluePins.length = 0;
+        // for(let i = 0; perfectMatches >= 0 && i <= perfectMatches; i++){
+            //     cluePins.push(2)
+            // }
+            // for(let i = 0; matches >= 0 && i <= matches; matches++){
+                //     cluePins.push(1)
+                // ?}
+    })
+}
 
 function getNextRow() {
         currentRow++
@@ -188,25 +192,28 @@ function getNextRow() {
 //countdown to start once player starts newBoard 
 
 function renderCountdown(cb) {
-    let count = 3;
-    // AUDIO.currentTime = 0;
-    // AUDIO.play();
-    countdownEl.style.visibility = 'visible';
-    countdownEl.innerText = count;
+    let count = 300;
+    countdownEl.innerText = formatTime(count);
     const timerId = setInterval(function() {
       count--;
-      if (count) {
-        countdownEl.innerText = count;
+      if (count > 0) {
+        countdownEl.innerText = formatTime(count);
       } else {
         clearInterval(timerId);
-        countdownEl.style.visibility = 'hidden';
         cb();
       }
     }, 1000);
   }
+
+function formatTime(time) {
+    const minutes = Math.floor(time / 60);
+    const seconds = time % 60;
+    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+}
 //render function to make the game work
 function render(){
     renderBoard()
+    renderCountdown()
     renderMessage()
 }
 
@@ -220,5 +227,5 @@ function renderMessage() {
 }
 
 function renderBoard() {
-
+    const board = document.querySelectorAll('board')
 }
