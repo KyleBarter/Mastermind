@@ -91,7 +91,7 @@ function newBoard () {
     cpuRanAry = cpuCode(colors);
     playerAry = [];
     document.querySelectorAll('.guess').forEach(guess => guess.style.backgroundColor = "");
-    clues.forEach(clue => clue.style.backgroundColor = "");
+    document.querySelectorAll('.clue').forEach(clue => clue.style.backgroundColor = "");
     currentGuess = 0
     currentRow = 0
     console.log(cpuRanAry)
@@ -148,12 +148,12 @@ function cluePin(playerAry, cpuRanAry) {
             console.log('match')
         }
     })
-    pinColor(perfectMatches, matches) 
+    return [perfectMatches, matches];
 }
 
 
 function pinColor(perfectMatches, matches) {
-    let cluePins = [...rows[currentRow].querySelectorAll(".clue")]
+    let cluePins = [...clues[currentRow].querySelectorAll(".clue")]
     cluePins.forEach((pin, i) => {
         if (i < perfectMatches) {
             pin.style.backgroundColor = "green"
@@ -175,10 +175,14 @@ function pinColor(perfectMatches, matches) {
                                 // ?}
 }
 
+const [perfectMatches, matches] = cluePin(playerAry, cpuRanAry);
+pinColor(perfectMatches, matches);
+
 
 function getNextRow() {
         currentRow++
         playerAry = []
+
         setColor()
     }
 
@@ -212,6 +216,7 @@ function formatTime(time) {
     const seconds = time % 60;
     return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 }
+
 //render function to make the game work
 function render(){
     renderBoard()
