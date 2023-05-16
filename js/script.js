@@ -37,28 +37,16 @@ const row9 = document.getElementById("row9")
 const row10 = document.getElementById("row10")
 const rows = [row1, row2, row3, row4, row5, row6, row7, row8, row9, row10]
 let currentRow = 0
-console.log(rows[currentRow])
 
-//guess elements
-// let guess1 = document.getElementById("guess1")
-// let guess2 = document.getElementById("guess2")
-// let guess3 = document.getElementById("guess3")
-// let guess4 = document.getElementById("guess4")
-// const guesses = [guess1, guess2, guess3, guess4]
+
 let currentGuess = 0
 
 
-//clue elements
-// const clue1 = document.getElementById("clue1")
-// const clue2 = document.getElementById("clue2")
-// const clue3 = document.getElementById("clue3")
-// const clue4 = document.getElementById("clue4")
-// const clues = [clue1, clue2, clue3, clue4]
 const clues = document.querySelectorAll('.clue-box')
-console.log(clues[currentRow])
 
 
-//loss image bomb
+
+//loss image
 const lossImg = document.createElement('img');
 Image.src = 'https://imgur.com/a/Qrkoc3U';
 
@@ -148,7 +136,7 @@ function cluePin(playerAry, cpuRanAry) {
             console.log('match')
         }
     })
-    return [perfectMatches, matches];
+    pinColor(perfectMatches, matches);
 }
 
 
@@ -166,23 +154,14 @@ function pinColor(perfectMatches, matches) {
             console.log('red')
         }
     })
-                        // ?cluePins.length = 0;
-                        // for(let i = 0; perfectMatches >= 0 && i <= perfectMatches; i++){
-                            //     cluePins.push(2)
-                            // }
-                            // for(let i = 0; matches >= 0 && i <= matches; matches++){
-                                //     cluePins.push(1)
-                                // ?}
 }
 
-const [perfectMatches, matches] = cluePin(playerAry, cpuRanAry);
-pinColor(perfectMatches, matches);
+
 
 
 function getNextRow() {
         currentRow++
         playerAry = []
-
         setColor()
     }
 
@@ -197,19 +176,25 @@ function getNextRow() {
 
 //countdown to start once player starts newBoard 
 
-function renderCountdown(cb) {
-    let count = 300;
-    countdownEl.innerText = formatTime(count);
-    const timerId = setInterval(function() {
-      count--;
-      if (count > 0) {
-        countdownEl.innerText = formatTime(count);
-      } else {
-        clearInterval(timerId);
-        cb();
-      }
-    }, 1000);
-  }
+function renderCountdown() {
+    let duration = 5 * 60;
+    let timer = duration, minutes, seconds;
+
+    let intervalId = setInterval(function () {
+        minutes = Math.floor(timer / 60);
+        seconds = timer % 60;
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        console.log(minutes + ":" + seconds)
+
+        if (--timer < 0) {
+            clearInterval(intervalId)
+            console.log("timer has ended")
+        }
+    }, 1000)
+}
 
 function formatTime(time) {
     const minutes = Math.floor(time / 60);
