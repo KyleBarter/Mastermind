@@ -58,7 +58,7 @@ const newBoardBtn = document.getElementById("new-game").addEventListener('click'
 
 
 // ! FUNCTIONS
-
+// note to test git working
 
 //cpu random array
 function cpuCode(arr) {
