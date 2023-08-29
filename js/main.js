@@ -157,7 +157,7 @@ function pinColor(perfectMatches, matches) {
 }
 
 
-
+// get next row, clearing player guess and using set color function
 
 function getNextRow() {
         currentRow++
