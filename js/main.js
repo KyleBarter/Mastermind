@@ -58,7 +58,6 @@ const newBoardBtn = document.getElementById("new-game").addEventListener('click'
 
 
 // ! FUNCTIONS
-// note to test git working
 
 //cpu random array
 function cpuCode(arr) {
@@ -187,7 +186,7 @@ function renderCountdown() {
         minutes = minutes < 10 ? "0" + minutes : minutes;
         seconds = seconds < 10 ? "0" + seconds : seconds;
 
-        console.log(minutes + ":" + seconds)
+        // console.log(minutes + ":" + seconds)
 
         if (--timer < 0) {
             clearInterval(intervalId)
@@ -219,5 +218,6 @@ function render(){
 // }
 
 function renderBoard() {
-    const board = document.querySelectorAll('board')
+    const board = document.querySelector('.board');
+    board.style.visibility = 'visible';
 }

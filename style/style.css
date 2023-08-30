@@ -37,17 +37,20 @@ h1:hover {
     "main . clue"
     "main . clue"
     "main . clue"
-    "main . clue"
+    "main . clue";
+    visibility: hidden;
 }
 
 .rows-container {
     grid-area: main;
     background-color: lightgray;
+    height: 0;
 }
 
 .clue-box-container {
     grid-area: clue;
     background-color: lightgray;
+    height: 0;
 }
 
 .rows {
