@@ -105,7 +105,6 @@ function submitClick() {
         console.log('submitted')
         cluePin(playerAry, cpuRanAry)
         getNextRow()
-        setColor()
         currentGuess = 0
         } else {
         console.log('You need more input')
@@ -122,17 +121,19 @@ function cluePin(playerAry, cpuRanAry) {
     let perfectMatches = 0; 
     let matches = 0;
     // check for perfect match
-    checkPlayer.forEach((choice, i) => {
-        const foundMatch = checkComp.indexOf(choice)
-        if (choice === checkComp[i]) {
+    playerAry.forEach((choice, i) => {
+        const foundMatch = cpuRanAry.indexOf(choice)
+        if (foundMatch === i) {
             perfectMatches++
-            checkPlayer.splice(i, 1)
-            checkComp.splice(i, 1)
-            console.log('perfect match')
-        } else if (foundMatch !== -1) { // check for match
-            matches++
-            checkComp.splice(foundMatch, 1)
-            console.log('match')
+            cpuRanAry[foundMatch] = null
+            playerAry[i] = null
+
+            console.log(choice)
+        } else if (foundMatch !== i) { // check for match
+                matches++
+                cpuRanAry[foundMatch] = null
+                playerAry[i] = null
+                console.log(choice)
         }
     })
     pinColor(perfectMatches, matches);
@@ -173,6 +174,29 @@ function getNextRow() {
 //?guess clues // this will need to compare the player guess and cpuRanAry to provide 3 possible colours
 //?green = correct colour in correct location, orange = correct colour in wrong location, red = wrong colour
 
+
+
+// render function to make the game work
+function render(){
+    renderBoard()
+    renderCountdown()
+    // renderMessage()
+}
+
+//message for winner / loser outcome
+// function renderMessage() {
+//     if (cluePins === 8) {
+//         console.log('You win')
+//     } else if (cluePins !== 8 && currentRow > 9 || countdownEl === 0) {
+//         console.log('You lose!') //this will need to be ammended to the lossImg variable
+//     }
+// }
+
+function renderBoard() {
+    const board = document.querySelector('.board');
+    board.style.visibility = 'visible';
+}
+
 //countdown to start once player starts newBoard 
 
 function renderCountdown() {
@@ -199,25 +223,4 @@ function formatTime(time) {
     const minutes = Math.floor(time / 60);
     const seconds = time % 60;
     return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-}
-
-//render function to make the game work
-function render(){
-    renderBoard()
-    renderCountdown()
-    // renderMessage()
-}
-
-//message for winner / loser outcome
-// function renderMessage() {
-//     if (cluePins === 8) {
-//         console.log('You win')
-//     } else if (cluePins !== 8 && currentRow > 9 || countdownEl === 0) {
-//         console.log('You lose!') //this will need to be ammended to the lossImg variable
-//     }
-// }
-
-function renderBoard() {
-    const board = document.querySelector('.board');
-    board.style.visibility = 'visible';
 }
