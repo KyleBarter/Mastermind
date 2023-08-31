@@ -81,7 +81,7 @@ function newBoard () {
     document.querySelectorAll('.clue').forEach(clue => clue.style.backgroundColor = "");
     currentGuess = 0
     currentRow = 0
-    console.log(cpuRanAry)
+    console.log('computer array', cpuRanAry)
     cpuCode(colors)
     render()
 }
@@ -116,48 +116,35 @@ submitClick()
 
 function cluePin(playerAry, cpuRanAry) {
     //comparison logic
-    const checkComp = [...cpuRanAry]
-    const checkPlayer = [...playerAry]
-    let round = 0
     let perfectMatches = 0; 
     let matches = 0;
     // check for perfect match
-    let cluePins = [...clues[currentRow].querySelectorAll(".clue")]
     playerAry.forEach((choice, i) => {
         const foundMatch = cpuRanAry.indexOf(choice)
-        cluePins.forEach((pin, i) => {
-            if (foundMatch === i) {
-                perfectMatches++
-                cpuRanAry[foundMatch] = null
-                playerAry[i] = null
-                pin.style.backgroundColor = "green"
-                console.log(choice)
-            } else if (foundMatch !== i) { // check for match
-                matches++
-                cpuRanAry[foundMatch] = null
-                playerAry[i] = null
-                console.log(choice)
-                pin.style.backgroundColor = "orange"
-            } else {
-                pin.style.backgroundColor = "red"
-            }
-        })
-    })
-    console.log(cluePins)
-    console.log('checkcomp = ', checkComp)
-    console.log('checkplaye = ', checkPlayer)
+        if (foundMatch === i) {
+            perfectMatches++
+            cpuRanAry[foundMatch] = null
+            playerAry[i] = null
 
+            console.log(choice)
+        } else if (foundMatch !== i) { // check for match
+            matches++
+            cpuRanAry[foundMatch] = null
+            playerAry[i] = null
+            console.log(choice)
+        }
+    })
     pinColor(perfectMatches, matches);
 }
 
 
 function pinColor(perfectMatches, matches) {
     let cluePins = [...clues[currentRow].querySelectorAll(".clue")]
-    cluePins.forEach((pin, i) => {
-        if (i < perfectMatches) {
+    cluePins.forEach((pin) => {
+        if (perfectMatches) {
             pin.style.backgroundColor = "green"
             console.log('green')
-        } else if (i < matches + perfectMatches) {
+        } else if (matches) {
             pin.style.backgroundColor = "orange"
             console.log('orange')
         } else {
@@ -165,14 +152,7 @@ function pinColor(perfectMatches, matches) {
             console.log('red')
         }
     })
-    // cluePins.forEach((pin, i) => {
-    //     for (perfectMatches in cluePins) {
-    //         pin.style.backgroundColor = "green"
-    //     }
-    //     for (matches in cluePins) {
-    //         pin.style.backgroundColor = "orange"
-    //     }
-    // })
+
 }
 
 
