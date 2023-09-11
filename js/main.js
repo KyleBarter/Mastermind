@@ -43,7 +43,7 @@ let currentGuess = 0
 
 
 const clues = document.querySelectorAll('.clue-box')
-
+let currentClue = 0
 
 
 //loss image
@@ -116,44 +116,81 @@ submitClick()
 
 function cluePin(playerAry, cpuRanAry) {
     //comparison logic
-    let perfectMatches = 0; 
-    let matches = 0;
-    // check for perfect match
-    playerAry.forEach((choice, i) => {
-        const foundMatch = cpuRanAry.indexOf(choice)
-        if (foundMatch === i) {
-            perfectMatches++
-            cpuRanAry[foundMatch] = null
-            playerAry[i] = null
-
-            console.log(choice)
-        } else if (foundMatch !== i) { // check for match
-            matches++
-            cpuRanAry[foundMatch] = null
-            playerAry[i] = null
-            console.log(choice)
-        }
-    })
-    pinColor(perfectMatches, matches);
-}
-
-
-function pinColor(perfectMatches, matches) {
+    let perfectMatches = []; 
+    let matches = [];
+    let wrongs = [];
     let cluePins = [...clues[currentRow].querySelectorAll(".clue")]
-    cluePins.forEach((pin) => {
-        if (perfectMatches) {
-            pin.style.backgroundColor = "green"
-            console.log('green')
-        } else if (matches) {
-            pin.style.backgroundColor = "orange"
-            console.log('orange')
-        } else {
-            pin.style.backgroundColor = "red"
-            console.log('red')
-        }
-    })
 
+    for (let i = 0; i <playerAry.length; i++) {
+        if (playerAry[i] === cpuRanAry[i]) {
+            perfectMatches.push(playerAry[i])
+        } else if (cpuRanAry.includes(playerAry[i])) {
+            matches.push(playerAry[i])
+        } else {
+            wrongs.push(playerAry[i])
+        }
+    }
+    console.log("Perfect Match: ", perfectMatches)
+    console.log("Match: ", matches)
+    console.log("Wrong: ", wrongs)
+    for (let i = 0; i < cluePins.length; i++) {
+        const pin = cluePins[i]
+        for (perfectMatch in perfectMatches) {
+            pin.style.backgroundColor = "green"
+            console.log(`setting pin ${i} to green`)
+        }
+        for (match in matches) {
+            pin.style.backgroundColor = "orange"
+            console.log(`setting pin ${i} to orange`)
+        }
+        for (wrong in wrongs) {
+            pin.style.backgroundColor = "red"
+            console.log(`setting pin ${i} to red`)
+        }
+    }
+    // pinColor(perfectMatches, matches, wrongs);
 }
+
+
+
+function pinColor( perfectMatches, matches, wrongs ) {
+    let cluePins = [...clues[currentRow].querySelectorAll(".clue")]
+    console.log("Perfect Match: ", perfectMatches)
+    console.log("Match: ", matches)
+    console.log("Wrong: ", wrongs)
+    for (let i = 0; i < cluePins.length; i++) {
+        const pin = cluePins[i]
+        console.log(`processing pin ${i}`)
+
+        // console.log(`i: ${i}, perfect matches: ${perfectMatches}, matches: ${matches}, wrong: ${wrongs}`)
+        if (perfectMatches.includes(i)) {
+            pin.style.backgroundColor = "green"
+            console.log(`setting pin ${i} to green`)    
+        }  else if (matches.includes(i)) {
+            pin.style.backgroundColor = "orange"
+            console.log(`setting pin ${i} to orange`)
+        }  else if (wrongs.includes(i)) {
+            pin.style.backgroundColor = "red"
+            console.log(`setting pin ${i} to red`)
+        }
+    }
+}
+// function pinColor( perfectMatches, matches ) {
+//     let cluePins = [...clues[currentRow].querySelectorAll(".clue")]
+//     cluePins.forEach((pin, i) => {
+//         console.log(`i: ${i}, perfect matches: ${perfectMatches}, matches: ${matches}`)
+//         if (perfectMatches.includes(i)) {
+//             pin.style.backgroundColor = "green"
+//             console.log('green')
+//         }
+//         if (matches.includes(i)) {
+//             pin.style.backgroundColor = "orange"
+//             console.log('orange')
+//         } 
+
+//     })
+// }
+
 
 
 // get next row, clearing player guess and using set color function
