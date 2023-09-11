@@ -135,15 +135,13 @@ function cluePin(playerAry, cpuRanAry) {
     console.log("Wrong: ", wrongs)
     for (let i = 0; i < cluePins.length; i++) {
         const pin = cluePins[i]
-        for (perfectMatch in perfectMatches) {
+        if (i < perfectMatches.length){
             pin.style.backgroundColor = "green"
             console.log(`setting pin ${i} to green`)
-        }
-        for (match in matches) {
+        } else if (i < perfectMatches.length + matches.length) {
             pin.style.backgroundColor = "orange"
             console.log(`setting pin ${i} to orange`)
-        }
-        for (wrong in wrongs) {
+        }  else if (i < perfectMatches.length + matches.length + wrongs.length) {
             pin.style.backgroundColor = "red"
             console.log(`setting pin ${i} to red`)
         }
