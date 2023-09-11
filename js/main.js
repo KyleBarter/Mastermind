@@ -120,19 +120,44 @@ function cluePin(playerAry, cpuRanAry) {
     let matches = [];
     let wrongs = [];
     let cluePins = [...clues[currentRow].querySelectorAll(".clue")]
+    let cpuRanAryCopy = [...cpuRanAry]
+    let playerAryCopy = [...playerAry]
 
-    for (let i = 0; i <playerAry.length; i++) {
-        if (playerAry[i] === cpuRanAry[i]) {
-            perfectMatches.push(playerAry[i])
-        } else if (cpuRanAry.includes(playerAry[i])) {
-            matches.push(playerAry[i])
-        } else {
-            wrongs.push(playerAry[i])
+
+    //separate perfect matches loop from the rest due to errors
+    for (let i = playerAryCopy.length - 1; i >= 0; i--) {
+        if (playerAryCopy[i] === cpuRanAryCopy[i]) {
+            perfectMatches.push(playerAryCopy[i]);
+            playerAryCopy.splice(i, 1);
+            cpuRanAryCopy.splice(i, 1);
+        }
+
+    }
+
+    // only matches getting reviewed here
+    for (let i = playerAryCopy.length - 1; i >= 0; i--) {
+        const element = playerAryCopy[i];
+        if (cpuRanAryCopy.includes(element)) {
+            matches.push(element);
+            const index = cpuRanAryCopy.indexOf(element);
+            if (index !== -1) {
+                cpuRanAryCopy.splice(index, 1);
+            }
+            const playerIndex = playerAryCopy.indexOf(element);
+            if (playerIndex !== -1) {
+                playerAryCopy.splice(playerIndex, 1);
+            }
         }
     }
+
+    //everything else gets regarded as a 'wrong'
+    wrongs = playerAryCopy.slice();
+
     console.log("Perfect Match: ", perfectMatches)
     console.log("Match: ", matches)
     console.log("Wrong: ", wrongs)
+
+    // for loop for the clue pins to change colour with each element in perfect match, match and wrong array
     for (let i = 0; i < cluePins.length; i++) {
         const pin = cluePins[i]
         if (i < perfectMatches.length){
@@ -146,48 +171,15 @@ function cluePin(playerAry, cpuRanAry) {
             console.log(`setting pin ${i} to red`)
         }
     }
-    // pinColor(perfectMatches, matches, wrongs);
-}
 
-
-
-function pinColor( perfectMatches, matches, wrongs ) {
-    let cluePins = [...clues[currentRow].querySelectorAll(".clue")]
-    console.log("Perfect Match: ", perfectMatches)
-    console.log("Match: ", matches)
-    console.log("Wrong: ", wrongs)
-    for (let i = 0; i < cluePins.length; i++) {
-        const pin = cluePins[i]
-        console.log(`processing pin ${i}`)
-
-        // console.log(`i: ${i}, perfect matches: ${perfectMatches}, matches: ${matches}, wrong: ${wrongs}`)
-        if (perfectMatches.includes(i)) {
-            pin.style.backgroundColor = "green"
-            console.log(`setting pin ${i} to green`)    
-        }  else if (matches.includes(i)) {
-            pin.style.backgroundColor = "orange"
-            console.log(`setting pin ${i} to orange`)
-        }  else if (wrongs.includes(i)) {
-            pin.style.backgroundColor = "red"
-            console.log(`setting pin ${i} to red`)
-        }
+    if (perfectMatches.length === 4) {
+        renderWin()
     }
 }
-// function pinColor( perfectMatches, matches ) {
-//     let cluePins = [...clues[currentRow].querySelectorAll(".clue")]
-//     cluePins.forEach((pin, i) => {
-//         console.log(`i: ${i}, perfect matches: ${perfectMatches}, matches: ${matches}`)
-//         if (perfectMatches.includes(i)) {
-//             pin.style.backgroundColor = "green"
-//             console.log('green')
-//         }
-//         if (matches.includes(i)) {
-//             pin.style.backgroundColor = "orange"
-//             console.log('orange')
-//         } 
 
-//     })
-// }
+
+
+
 
 
 
@@ -217,18 +209,24 @@ function render(){
     // renderMessage()
 }
 
-//message for winner / loser outcome
-// function renderMessage() {
-//     if (cluePins === 8) {
-//         console.log('You win')
-//     } else if (cluePins !== 8 && currentRow > 9 || countdownEl === 0) {
-//         console.log('You lose!') //this will need to be ammended to the lossImg variable
-//     }
-// }
+
 
 function renderBoard() {
-    const board = document.querySelector('.board');
+    const board = document.querySelector('.board-container');
+    const rules = document.querySelector('.rules-container')
     board.style.visibility = 'visible';
+    rules.style.display = 'none'
+}
+
+
+//render win display
+function renderWin(){
+    const winMessage = document.querySelector('.win-message');
+    winMessage.style.visibility = 'visible'
+}
+
+function renderLoss(){
+
 }
 
 //countdown to start once player starts newBoard 

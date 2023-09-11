@@ -2,7 +2,7 @@
     background-color: white;
 }
 body {
-    font-family: helvetica;
+    font-family: 'Orbitron', sans-serif;
 }
 
 h1 {
@@ -16,6 +16,12 @@ h1:hover {
     font-size: 62px;
     text-decoration: underline;
     font-weight: bold;
+}
+
+.board-container {
+    visibility: hidden;
+    width: 600px;
+    display: inline;
 }
 
 .board {
@@ -38,7 +44,6 @@ h1:hover {
     "main . clue"
     "main . clue"
     "main . clue";
-    visibility: hidden;
 }
 
 .rows-container {
@@ -153,11 +158,66 @@ h1:hover {
     height: 100px;
     width: 100px;
     display: flex;
-    margin: -300px 100px 400px 530px;
     align-items: center;
     justify-content: center;
     text-align: center;
     color: red;
     background-color: lightgray;
     font-size: 25px;
+    position: absolute;
+    top: 50%;
+    display: none;
+}
+
+.win-message {
+    display: none;
+}
+
+.rules-container {
+    display: flex;
+    justify-content: center;
+
+}
+
+.rules {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: lightgray;
+    border-radius: 15px;
+}
+
+h2 {
+    background-color: lightgray;
+}
+
+ul {
+    background-color: lightgray;
+}
+
+li {
+    padding: 15px;
+    background-color: lightgray;
+    list-style: none;
+    padding-right: 15px;
+}
+
+.green {
+    color: green;
+    font-weight: bold;
+    background-color: lightgray;
+
+}
+.orange {
+    color: orange;
+    font-weight: bold;
+    background-color: lightgray;
+
+}
+.red {
+    color: red;
+    font-weight: bold;
+    background-color: lightgray;
+
 }
