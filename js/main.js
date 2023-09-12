@@ -45,12 +45,12 @@ let currentGuess = 0
 const clues = document.querySelectorAll('.clue-box')
 let currentClue = 0
 
-
-//loss image
-const lossImg = document.createElement('img');
-Image.src = 'https://imgur.com/a/Qrkoc3U';
-
-const countdownEl = document.querySelectorAll('#countdown')
+const submitGuess = document.getElementById("submit");
+const board = document.querySelector('.board-container');
+const rules = document.querySelector('.rules-container')
+const winMessage = document.querySelector('.win-message');
+const lossImg = document.createElement('img')
+const countdownEl = document.getElementById('countdown')
 
 // ! EVENTS
 //generate new code / play again button
@@ -99,7 +99,6 @@ let setColor = color => {
 setColor()    
 
 function submitClick() {
-    const submitGuess = document.getElementById("submit");
     submitGuess.addEventListener('click', () => {
         if (currentGuess > 3) {
         console.log('submitted')
@@ -178,17 +177,15 @@ function cluePin(playerAry, cpuRanAry) {
 }
 
 
-
-
-
-
-
 // get next row, clearing player guess and using set color function
 
 function getNextRow() {
         currentRow++
         playerAry = []
         setColor()
+        if (currentRow > 10) {
+            renderLoss()
+        }
     }
 
 
@@ -212,30 +209,41 @@ function render(){
 
 
 function renderBoard() {
-    const board = document.querySelector('.board-container');
-    const rules = document.querySelector('.rules-container')
+
     board.style.visibility = 'visible';
     rules.style.display = 'none'
+    winMessage.style.display = 'none'
 }
 
 
 //render win display
 function renderWin(){
-    const winMessage = document.querySelector('.win-message');
-    winMessage.style.visibility = 'visible'
+    winMessage.style.display = 'block'
 }
 
 function renderLoss(){
-
+    lossImg.src = 'https://imgur.com/a/Qrkoc3U';
+    const lossImgContainer = document.querySelector('loss-message');
+    lossImgContainer.innerHTML = '';
+    lossImgContainer.appendChild(lossImg)
+    board.style.display = 'none'
+    console.log('game over')
 }
 
 //countdown to start once player starts newBoard 
 
+let intervalId;
+
 function renderCountdown() {
-    let duration = 5 * 60;
+    if (intervalId) {
+        clearInterval(intervalId)
+    }
+
+    let duration = 1 * 60;
     let timer = duration, minutes, seconds;
 
-    let intervalId = setInterval(function () {
+
+    intervalId = setInterval(function () {
         minutes = Math.floor(timer / 60);
         seconds = timer % 60;
 
@@ -243,9 +251,10 @@ function renderCountdown() {
         seconds = seconds < 10 ? "0" + seconds : seconds;
 
         // console.log(minutes + ":" + seconds)
-
+        countdownEl.textContent = `${minutes}:${seconds}`
         if (--timer < 0) {
             clearInterval(intervalId)
+            renderLoss()
             console.log("timer has ended")
         }
     }, 1000)
