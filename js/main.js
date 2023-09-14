@@ -49,8 +49,9 @@ const submitGuess = document.getElementById("submit");
 const board = document.querySelector('.board-container');
 const rules = document.querySelector('.rules-container')
 const winMessage = document.querySelector('.win-message');
-const lossImg = document.createElement('img')
 const countdownEl = document.getElementById('countdown')
+const lossImg = document.querySelector('.loss-message-container');
+const lossText = document.querySelector('.loss-message-text')
 
 // ! EVENTS
 //generate new code / play again button
@@ -222,10 +223,20 @@ function renderWin(){
 }
 
 function renderLoss(){
-    lossImg.src = 'https://imgur.com/a/Qrkoc3U';
-    const lossImgContainer = document.querySelector('loss-message');
-    lossImgContainer.innerHTML = '';
-    lossImgContainer.appendChild(lossImg)
+    lossImg.style.display = 'block'
+    lossText.style.display = 'block'
+    lossText.innerHTML = `GAME OVER - THE CODE WAS: ${cpuRanAry[0]}, ${cpuRanAry[1]}, ${cpuRanAry[2]}, ${cpuRanAry[3]}`
+    let opacity = 0;
+    function fade(){
+        if (opacity >= 1) {
+            return
+        }
+        opacity += 0.01
+        lossImg.style.opacity = opacity
+        requestAnimationFrame(fade)
+    }
+
+    requestAnimationFrame(fade)
     board.style.display = 'none'
     console.log('game over')
 }
