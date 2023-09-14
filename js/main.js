@@ -250,7 +250,7 @@ function renderCountdown() {
         clearInterval(intervalId)
     }
 
-    let duration = 1 * 60;
+    let duration = 3 * 60;
     let timer = duration, minutes, seconds;
 
 
